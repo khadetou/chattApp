@@ -6,10 +6,12 @@ export default function Input({ setMessage, sendMessage, message }) {
         className="input"
         placeholder="Type a message"
         value={message}
-        onChange={({ target: { value } }) => setMessage(value)}
+        onChange={(e) => {
+          setMessage(e.target.value);
+        }}
         onKeyPress={(e) => (e.key === "Enter" ? sendMessage(e) : null)}
       />
-      <button className="sendButto" onClick={(e) => sendMessage(e)}>
+      <button className="sendButton" onClick={(e) => sendMessage(e)}>
         Send
       </button>
     </form>

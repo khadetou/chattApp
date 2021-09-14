@@ -15,9 +15,12 @@ const {
 let port = 3000;
 
 io.on("connect", (socket) => {
+  // socket.emit("mess", {
+  //   message: "message",
+  // });
+
   socket.on("join", ({ name, room }, callback) => {
     const { error, user } = addUser({ id: socket.id, name, room });
-
     if (error) return callback(error);
 
     socket.join(user.room);
@@ -41,12 +44,11 @@ io.on("connect", (socket) => {
 
   socket.on("sendMessage", (message, callback) => {
     const user = getUser(socket.id);
-
+    console.log(message);
     io.to(user.room).emit("message", { user: user.name, text: message });
 
     callback();
   });
-
   socket.on("disconnect", () => {
     const user = removeUser(socket.id);
 
